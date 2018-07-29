@@ -28,16 +28,21 @@ io.on('connection', (socket) => {
     console.log('User was disconnected');
   });
 
-  // newMessage Event
-  socket.emit('newMessage', {
-    from: 'me',
-    text: 'this is text',
-    createdAt: 123
-  });
+  // // newMessage Event
+  // socket.emit('newMessage', {
+  //   from: 'me',
+  //   text: 'this is text',
+  //   createdAt: 123
+  // });
 
   // createMessage Event
   socket.on('createMessage', (message) => {
     console.log('createMessage', message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    })
   });
 });
 
