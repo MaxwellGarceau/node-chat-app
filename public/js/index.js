@@ -27,3 +27,10 @@ socket.on('newEmail', (email) => {
 socket.on('newMessage', (message) => {
   console.log('Message: ', message);
 });
+
+socket.emit('createMessage', {
+  from: 'Frank',
+  text: 'Hi'
+}, (data) => {
+  console.log('Got it:', data);
+});
