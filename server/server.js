@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const { generateMessage } = require('./utils/message');
+const { generateMessage, generateLocationMessage } = require('./utils/message');
 const publicPath = path.join(__dirname, '../public');
 // console.log('public path', publicPath);
 // console.log('dirname', __dirname);
@@ -21,26 +21,10 @@ io.on('connection', (socket) => {
 
   socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-  // socket.emit('newEmail', {
-  //   from: 'mike@example.com',
-  //   text: 'Hey. What is going on.',
-  //   createdAt: 123
-  // });
-
-  // socket.on('createEmail', (newEmail) => {
-  //   console.log('createEmail', newEmail);
-  // })
-
   socket.on('disconnect', () => {
     console.log('User was disconnected');
   });
 
-  // // newMessage Event
-  // socket.emit('newMessage', {
-  //   from: 'me',
-  //   text: 'this is text',
-  //   createdAt: 123
-  // });
 
   // createMessage Event
   socket.on('createMessage', (message, callback) => {
@@ -50,7 +34,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('createLocationMessage', (coords) => {
-    io.emit('newMessage', generateMessage('Admin', `${coords.latitude}, ${coords.longitude}`));
+    io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
   });
   
 });
