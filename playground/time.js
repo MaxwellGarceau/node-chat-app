@@ -9,3 +9,7 @@ date.add(1, 'years')
 const currentDateTime = moment().format('h:mm a');
 
 console.log(currentDateTime);
+
+new Date().getTime();
+const someTimestamp = moment().valueOf();
+console.log(someTimestamp);
