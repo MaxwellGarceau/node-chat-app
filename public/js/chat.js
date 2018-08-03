@@ -17,18 +17,16 @@ function scrollToBottom() {
 }
 
 socket.on('connect', () => {
-  console.log('Connected to server');
+  const params = jQuery.deparam(window.location.search);
 
-  socket.emit('createEmail', {
-    to: 'pedro@yahoo.com',
-    text: 'Hola!'
+  socket.emit('join', params, (err) => {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    } else {
+      console.log('No error');
+    }
   });
-
-  // // createMessage Event
-  // socket.emit('createMessage', {
-  //   from: 'them',
-  //   text: 'Lorem Ipsum'
-  // });
 });
 
 socket.on('disconnect', () => {
